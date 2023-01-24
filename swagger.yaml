@@ -1,0 +1,2525 @@
+---
+openapi: 3.0.0
+info:
+  title: Learn Space API Documentation
+  description: API documentation for Spirit traveller API
+  termsOfService: https://www.dwatatech.com/terms
+  contact:
+    name: Dwata tech
+    url: https://www.dwatatech.com
+    email: admin@dwatatech.com
+  version: 1.1.4
+servers:
+- url: https://virtserver.swaggerhub.com/dwatatech.com/LearnSpace/1.1.4
+  description: SwaggerHub API Auto Mocking
+- url: https://virtserver.swaggerhub.com/dwatatech.com/SpiritTraveller/1.0.6
+  description: SwaggerHub API Auto Mocking
+- url: https://virtserver.swaggerhub.com/DwataTech-Swaager/SpiritTraveller/1.0.6
+  description: SwaggerHub API Auto Mocking
+- url: http://localhost:3000/api/v1
+  description: Base URL
+paths:
+  /changePassword:
+    post:
+      tags:
+      - Auth-Service
+      summary: Change password
+      description: 'Update password by providing emailID, OTP and new password '
+      operationId: post-changePassword
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Request body for updating password
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChagePassword'
+            examples:
+              Sample request body for update password:
+                value:
+                  email: john@theDown.com
+                  password: "1234839473729423"
+                  otp: "123456"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                OK:
+                  value:
+                    message: Success
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad Request:
+                  value:
+                    message: Please provide valid data
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal Server Error:
+                  value:
+                    message: Internal Server Error
+  /course/{courseId}/discussion:
+    get:
+      tags:
+      - Discussion-Service
+      summary: Get Discussion Items
+      description: Get disucssion items
+      operationId: get-disussion
+      parameters:
+      - name: courseId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                OK:
+                  value:
+                    data:
+                      discussionItems:
+                      - id: "12345"
+                        question: sample title
+                        questionBy:
+                          userId: userId
+                          userName: Vaibhav
+                          imageUrl: user-image-url
+                        questionAt: 2022-08-16T07:25:25.248Z
+                        answer: sample body
+                        answeredBy:
+                          userId: userId
+                          userName: Vaibhav
+                          imageUrl: user-image-url
+                        answeredAt: 2022-08-16T07:25:25.248Z
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal Server Error:
+                  value:
+                    message: Internal Server Error
+      security:
+      - Authorization: []
+    put:
+      tags:
+      - Discussion-Service
+      summary: Update Discussion Item Details
+      description: post answer to question
+      operationId: put-disussion
+      parameters:
+      - name: courseId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: 'Request body for editing discussion item '
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditDiscussionItem'
+            examples:
+              'Request body for editing discussion item ':
+                value:
+                  id: "123"
+                  answer: sample answer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                OK:
+                  value:
+                    message: Success
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad Request:
+                  value:
+                    message: Please provide valid data
+      security:
+      - Authorization: []
+    post:
+      tags:
+      - Discussion-Service
+      summary: Add Discussion item
+      description: Add question in disccusion forum
+      operationId: post-add-discussion
+      parameters:
+      - name: courseId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Request body for adding discussion
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddDiscussion'
+            examples:
+              Sample request body for Add discussion:
+                value:
+                  question: sample question?
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                OK:
+                  value:
+                    message: Success
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad Request:
+                  value:
+                    message: Please provide valid data
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal Server Error:
+                  value:
+                    message: Internal Server Error
+      security:
+      - Authorization: []
+  /forgotPassword:
+    post:
+      tags:
+      - Auth-Service
+      summary: Send Forgot Password Email
+      description: Trigger forgot password mechanism, OTP will be sent on given email address if user exist
+      operationId: post-forgotPassword
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Provide valid data for triggering forgot possword mechanism
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPassword'
+            examples:
+              Sample request body:
+                value:
+                  email: user@usercompany.com
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                Success:
+                  value:
+                    message: success
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad Request:
+                  value:
+                    message: Please provide valid data
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Not found:
+                  value:
+                    message: User does not exist with this email
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+  /login:
+    post:
+      tags:
+      - Auth-Service
+      summary: Login User By Email And Password
+      description: Login user with provided email and password
+      operationId: post-login
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Post the necessary fields for the API to login yourself.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+            examples:
+              'Sample request body ':
+                value:
+                  email: jackz
+                  password: "1234"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                Success:
+                  value:
+                    data:
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Bad Request ':
+                  value:
+                    message: User is blocked
+        "401":
+          description: Provided Information Mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Unauthorized ':
+                  value:
+                    message: Email/Password does not match
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal Server Error:
+                  value:
+                    message: Internal server error
+  /logout:
+    get:
+      tags:
+      - Auth-Service
+      summary: Logout User
+      description: Logout user by using auth token and invalidate session id
+      operationId: get-logout
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                Success:
+                  value:
+                    message: Logged out successfully !
+        "400":
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad Request:
+                  value:
+                    message: Please provide valid data
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /plans:
+    get:
+      tags:
+      - Subscription-Service
+      summary: Fetch Subscription Plans
+      description: Fetch list of plans currently available
+      operationId: get-plans
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                Success:
+                  value:
+                    data:
+                      plans:
+                      - id: product1
+                        name: monthly
+                        price: "100"
+                        currency: INR
+                        interval: 30 days
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /plans/{planId}:
+    get:
+      tags:
+      - Subscription-Service
+      summary: Fetch Plan Details
+      description: Fetch plan details using plan id
+      operationId: get-plans-:planId
+      parameters:
+      - name: planId
+        in: path
+        description: 'Plan id '
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                OK:
+                  value:
+                    data:
+                      id: plan_K3THJw6xg5CYxu
+                      name: DAILY
+                      interval: 7 days
+                      currency: INR
+                      price: "1.00"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad Request:
+                  value:
+                    message: Please provide valid data
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal Server Error:
+                  value:
+                    message: Internal Server Error
+      security:
+      - Authorization: []
+  /register/google:
+    post:
+      tags:
+      - Auth-Service
+      summary: Sign-in / Sign-up user with google auth token
+      description: Register user using google authentication token
+      operationId: post-user-google
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Register user using google auth token
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationWithAuthToken'
+            examples:
+              Request body for user registration using auth token:
+                value:
+                  accessToken: eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY1OTUwNzU4OCwiaWF0IjoxNjU5NTA3NTg4fQ.ivl6Y3344y3M4UbddPCDz472paouL7P55X_a3XCHUdU
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                OK:
+                  value:
+                    data:
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad request:
+                  value:
+                    message: Token is invalid
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal Server Error:
+                  value:
+                    message: Internal Server Error
+  /register/apple:
+    post:
+      tags:
+      - Auth-Service
+      summary: Sign-in / Sign-up user with apple auth token (Draft)
+      description: Register user using google authentication token
+      operationId: post-user-apple
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Register user using apple auth token
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationWithAuthToken'
+            examples:
+              Request body for user registration using auth token:
+                value:
+                  accessToken: eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY1OTUwNzU4OCwiaWF0IjoxNjU5NTA3NTg4fQ.ivl6Y3344y3M4UbddPCDz472paouL7P55X_a3XCHUdU
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                OK:
+                  value:
+                    data:
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad request:
+                  value:
+                    message: Token is invalid
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal Server Error:
+                  value:
+                    message: Internal Server Error
+  /register/linkedin:
+    post:
+      tags:
+      - Auth-Service
+      summary: Sign-in / Sign-up user with linkedin auth token
+      description: Register user using linkedin authentication token
+      operationId: post-user-linkedin
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Register user using apple auth token
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationWithAuthToken'
+            examples:
+              Request body for user registration using auth token:
+                value:
+                  accessToken: eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY1OTUwNzU4OCwiaWF0IjoxNjU5NTA3NTg4fQ.ivl6Y3344y3M4UbddPCDz472paouL7P55X_a3XCHUdU
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                OK:
+                  value:
+                    data:
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad request:
+                  value:
+                    message: Token is invalid
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal Server Error:
+                  value:
+                    message: Internal Server Error
+  /sendOTP:
+    post:
+      tags:
+      - Auth-Service
+      summary: Verify User Details
+      description: While user registration the API can be used to verify the email and phone number. The API will read user Id from the token and will send OTP to given type(mobile/email)
+      operationId: post-verify-user-details
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: 'Provide data to trigger verification mechanism '
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyUserDetails'
+            examples:
+              Sample request body:
+                value:
+                  type: VERIFY_EMAIL
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                Success:
+                  value:
+                    message: success
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad Request:
+                  value:
+                    message: Please provide valid data
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /subscribe:
+    post:
+      tags:
+      - Subscription-Service
+      summary: Add Subscription
+      description: Add subscription to database. This api will be called explicitly or will be called using webhook
+      operationId: post-subscribe
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Request body for adding subscriptions
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddSubscription'
+            examples:
+              Add subscription request body:
+                value:
+                  planId: product1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                OK:
+                  value:
+                    message: success
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad request.:
+                  value:
+                    message: Please provide valid input
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /subscribe/{subscriptionId}:
+    get:
+      tags:
+      - Subscription-Service
+      summary: Fetch Subscription Details
+      description: Fetch subscription details based of razor pay subscription id
+      operationId: get-subscribe-subscriptionId
+      parameters:
+      - name: subscriptionId
+        in: path
+        description: Subscription id received from razor pay
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                OK:
+                  value:
+                    data:
+                      subscriptionId: sub_K3Vy9BTGCARYZh
+                      planId: plan_K3THJw6xg5CYxu
+                      planName: DAILY
+                      userId: 996f8dfb-908b-458d-9c0d-aa974ff919a0
+                      paymentLink: https://rzp.io/i/LpwaZoCbY3
+                      status: completed
+                      startDate: 20-Jan-1970 10:37:24
+                      endDate: 20-Jan-1970 10:47:29
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad Request:
+                  value:
+                    message: Please provide valid data
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal Server Error:
+                  value:
+                    message: Internal Server Error
+      security:
+      - Authorization: []
+  /subscribe/{subscriptionId}/cancel:
+    post:
+      tags:
+      - Subscription-Service
+      summary: Cancel Subscriptions
+      description: Cancel the active subscriptions
+      operationId: post-subscribe-subscriptionId-cancel
+      parameters:
+      - name: subscriptionId
+        in: path
+        description: Subscription id received from razor pay
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Request body for cancel subscription. Subscription can be cancelled immediately (default behavior) or it can be cacelled at the end of current active billing cycle
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelSubscription'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                OK:
+                  value:
+                    message: Success
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal Server Error:
+                  value:
+                    message: Internal Server Error
+      security:
+      - Authorization: []
+  /user:
+    put:
+      tags:
+      - User-Service
+      summary: Edit User Details
+      description: Edit user details by using user id
+      operationId: put-user
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Request body for editing user details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditUserDetails'
+            examples:
+              Request body for edit user details:
+                value:
+                  id: 1231242i4o32
+                  firstName: jack
+                  lastName: sparrow
+                  'email ': jack@dwatatech.com
+                  phoneNumber: "12345678"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                Success:
+                  value:
+                    message: success
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad request:
+                  value:
+                    message: Please provide valid data
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+    post:
+      tags:
+      - User-Service
+      summary: Register New User
+      description: 'Register user with provided details '
+      operationId: post-user
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Post the necessary fields for the API to register user.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUser'
+            examples:
+              Register User Request body:
+                value:
+                  firstName: jack
+                  lastName: sparrow
+                  password: "1234"
+                  'email ': jack@dwatatech.com
+                  phoneNumber: "12345678"
+                  loginType: APPLE
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                Success:
+                  value:
+                    data:
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        "400":
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Missing Required Information:
+                  value:
+                    message: Please provide all the necessary information
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Internal Server Error ':
+                  value:
+                    message: Internal server error
+  /user/{userId}:
+    get:
+      tags:
+      - User-Service
+      summary: Fetch User Info
+      description: Retrieve the information of the user with the matching user ID.
+      operationId: get-user-details
+      parameters:
+      - name: userId
+        in: path
+        description: Id of an existing user.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                OK:
+                  value:
+                    data:
+                      user:
+                        userId: 98bf3c8b-4f3c-4f30-84fd-60edf9411e37
+                        firstName: jack
+                        lastName: sparraow
+                        username: jackz
+                        phoneNumber: "1234567890"
+                        'email ': jack@dwatatech.com
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Forbidden:
+                  value:
+                    message: User is blocked
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Not found:
+                  value:
+                    message: User not found
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /user/{email}/isExist:
+    get:
+      tags:
+      - User-Service
+      summary: Check Is User Exist In The System
+      description: Check wheather the user exist in the system
+      operationId: post-user-email-isExist
+      parameters:
+      - name: email
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                Success:
+                  value:
+                    data:
+                      isUserExist: true
+        "400":
+          description: Missing required information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Bad Request ':
+                  value:
+                    message: Please provide valid data
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Forbidden:
+                  value:
+                    message: User is blocked
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /user/status:
+    put:
+      tags:
+      - User-Service
+      summary: Modify User Status
+      description: Modify user status by using user id
+      operationId: post-user-status
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: 'Request body for modifying the user status '
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserStatusModification'
+            examples:
+              Request body for user status modification:
+                value:
+                  status: ACTIVE
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                Success:
+                  value:
+                    message: success
+        "400":
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Missing Required Information:
+                  value:
+                    message: Please provide valid input
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /verifyOTP:
+    post:
+      tags:
+      - Auth-Service
+      summary: Verify OTP For User Details
+      description: "Verify OTP by using provided user ID. The API can be used in different cases as below\n\nA] After successful registration of user\n\nCase 1: , User can verify the email. \n\nCase 2: , User can verify the phone number.\n\nB] Forgot password flow\n\ncaes 3: To verify the OTP sent via /forgot-password API. \n"
+      operationId: post-verifyOTP
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Request body for verifying the OTP against user ID
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyOTP'
+            examples:
+              Request body:
+                value:
+                  userId: "123455"
+                  otp: "123456"
+                  type: VERIFY_EMAIL
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                Success:
+                  value:
+                    message: success
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Bad Request:
+                  value:
+                    message: Please provide valid OTP
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Forbidden:
+                  value:
+                    message: OTP is expired
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /courses:
+    get:
+      tags:
+      - Course-Service
+      summary: List of Courses
+      description: Get the list of courses
+      operationId: get-courses
+      parameters:
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseListResponse'
+              examples:
+                example-1:
+                  value:
+                    data:
+                      courses:
+                      - id: string
+                        name: string
+                        description: string
+        "400":
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Missing Required Information:
+                  value:
+                    message: Please provide valid input
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /course/{courseId}/attendance:
+    put:
+      tags:
+      - Course-Service
+      summary: Update Student Attendance
+      description: The API will be used to mark student attendance. If student started attending course it will be mark as present and once he left the session, student should mark absent. The Goal of API is to identify total live students
+      operationId: put-course
+      parameters:
+      - name: courseId
+        in: path
+        description: CourseId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: present
+        in: query
+        description: attandance, true false
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                Success:
+                  value:
+                    message: success
+        "400":
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Missing Required Information:
+                  value:
+                    message: Please provide valid input
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /course/{courseId}/understanding:
+    post:
+      tags:
+      - Course-Service
+      summary: Update Student understanding
+      description: The API will be used to post student understanding about the course/session.
+      operationId: get-course-courseId-understanding
+      parameters:
+      - name: courseId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: The API can be use to post the student understanding
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/courseId_understanding_body'
+            examples:
+              Request:
+                value:
+                  understanding: This is my understanding about the content
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                Success:
+                  value:
+                    message: success
+        "400":
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Missing Required Information:
+                  value:
+                    message: Please provide valid input
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /course/{courseId}/questions:
+    get:
+      tags:
+      - Course-Service
+      summary: Get list of questions
+      description: Get the list of questions for given courseId
+      operationId: get-course-courseId-questions
+      parameters:
+      - name: courseId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetListOfQuestions'
+              examples:
+                Success Response:
+                  value:
+                    data:
+                      questions:
+                      - id: "1"
+                        question: Sample question 1?
+                      - id: "2"
+                        question: Sample question 2?
+        "400":
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Missing Required Information:
+                  value:
+                    message: Please provide valid input
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /course/{courseId}/answer:
+    post:
+      tags:
+      - Course-Service
+      summary: Update answer of question
+      description: Update the answer of question
+      operationId: get-course-courseId-answer
+      parameters:
+      - name: courseId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/courseId_answer_body'
+            examples:
+              Request:
+                value:
+                  questionId: "1"
+                  answer: I think this is answer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                Success:
+                  value:
+                    message: success
+        "400":
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Missing Required Information:
+                  value:
+                    message: Please provide valid input
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /course/{courseId}/group/{groupId}/answer:
+    post:
+      tags:
+      - Course-Service
+      summary: Update answer of question of group
+      description: Update consolidated answer of a whole group
+      operationId: get-course-courseId--group-groudId-answer
+      parameters:
+      - name: courseId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/groupId_answer_body'
+            examples:
+              Request:
+                value:
+                  questionId: "1"
+                  answer: I think this is answer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              examples:
+                Success:
+                  value:
+                    message: success
+        "400":
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Missing Required Information:
+                  value:
+                    message: Please provide valid input
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /course/{courseId}/groups:
+    get:
+      tags:
+      - Course-Service
+      summary: Get Groups of students
+      description: |
+        The API will return given number of groups of live students who is attending course
+      operationId: get-course-courseId-groups?count=5
+      parameters:
+      - name: courseId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: count
+        in: query
+        description: total number of groups required
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupsResponse'
+              examples:
+                SuccessExample:
+                  value:
+                    data:
+                      groups:
+                      - groupId: group1
+                        users:
+                        - user1
+                        - user2
+                      - groupId: group2
+                        users:
+                        - user3
+                        - user4
+        "400":
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Missing Required Information:
+                  value:
+                    message: Please provide valid input
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /course/{courseId}/group/answers:
+    get:
+      tags:
+      - Course-Service
+      summary: Get Answers of specific group
+      description: The API can be use to get group specific answers
+      operationId: get-course-courseId-group-groupId-answers
+      parameters:
+      - name: courseId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupAnswerList'
+        "400":
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Missing Required Information:
+                  value:
+                    message: Please provide valid input
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /course/{courseId}/world-cloud:
+    get:
+      tags:
+      - Course-Service
+      summary: Get list of world cloud of all students
+      description: The API can be use to get world cloud
+      operationId: get-course-courseId-answers
+      parameters:
+      - name: courseId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOfWordCloud'
+              examples:
+                example-1:
+                  value:
+                    data:
+                      wordCloud:
+                      - userId: string
+                        word: string
+        "400":
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Missing Required Information:
+                  value:
+                    message: Please provide valid input
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+  /course/{courseId}/reports:
+    get:
+      tags:
+      - Course-Service
+      summary: Get Reports of specific course
+      description: The API can be use to get reports of all students from specific course
+      operationId: get-course-courseId-repors
+      parameters:
+      - name: courseId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: X-REQUEST-ID
+        in: header
+        description: request id to trace the request. Need to be passed by caller. This should be uuid
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reports'
+              examples:
+                example-1:
+                  value:
+                    data:
+                      groups:
+                      - groupId: group1
+                        answer: anything
+                      users:
+                      - userId: user1
+                        strikeWord: anything
+                        understanding: my understanding about the course
+                        response:
+                        - questionId: question1
+                          answers:
+                          - answer1
+                          - answer2
+                          - answer3
+                        - questionId: question2
+                          answers:
+                          - answer1
+                          - answer3
+                        - questionId: question3
+                          answers:
+                          - answer1
+                      - userId: user2
+                        strikeWord: anything
+                        understanding: my understanding about the course
+                        response:
+                        - questionId: question1
+                          answers:
+                          - answer1
+                          - answer2
+                          - answer3
+                        - questionId: question2
+                          answers:
+                          - answer1
+                          - answer3
+        "400":
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Missing Required Information:
+                  value:
+                    message: Please provide valid input
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Internal server error:
+                  value:
+                    message: Internal server error
+      security:
+      - Authorization: []
+components:
+  schemas:
+    SuccessResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties: {}
+      description: Success Response model
+      x-examples:
+        Success Response:
+          data: {}
+    ErrorResponse:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+      description: 'Model for Non success response '
+      x-examples:
+        Error response:
+          message: Error message
+    CommonResponse:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+      description: 'Model for Non success response '
+      x-examples:
+        Error response:
+          message: Error message
+    RegisterUser:
+      required:
+      - 'email '
+      - firstName
+      - lastName
+      - loginType
+      - password
+      - phoneNumber
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        password:
+          type: string
+        'email ':
+          type: string
+        phoneNumber:
+          type: string
+        loginType:
+          type: string
+          enum:
+          - APPLE
+          - GOOGLE
+          - EMAIL_PASSWORD
+      description: Register user model
+      x-examples:
+        Register User request body:
+          firstName: jack
+          lastName: sparrow
+          password: "1234"
+          'email ': jack@dwatatech.com
+          phoneNumber: "12345678"
+          loginType: APPLE
+    ForgotPassword:
+      type: object
+      properties:
+        email:
+          type: string
+      description: Model for forgot password functionality
+      x-examples:
+        Forgot Password:
+          email: user@usercompany.com
+    VerifyUserDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - VERIFY_EMAIL
+          - VERIFY_PHONE
+      description: Model for verify user details
+      x-examples:
+        verify user details:
+          type: VERIFY_EMAIL
+    LoginUser:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      description: Model for login
+      x-examples:
+        'Login user ':
+          email: jackz
+          password: "1234"
+    VerifyOTP:
+      title: VerifyOTP
+      type: object
+      properties:
+        otp:
+          type: string
+        type:
+          type: string
+      description: Verify OTP model
+      x-examples:
+        Veirfy OTP Request body:
+          otp: "123456"
+          type: VERIFY_EMAIL
+    UserStatusModification:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+          default: ACTIVE
+          enum:
+          - ACTIVE
+          - INACTIVE
+      description: "Model for user status modification \n"
+      x-examples:
+        User Status:
+          status: ACTIVE
+    EditUserDetails:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        'email ':
+          type: string
+        phoneNumber:
+          type: string
+      description: Model for userd details
+      x-examples:
+        Edit User:
+          id: 1231242i4o32
+          firstName: jack
+          lastName: sparrow
+          password: Sam@89987
+          'email ': jack@dwatatech.com
+          phoneNumber: "12345678"
+    AddSubscription:
+      type: object
+      properties:
+        planId:
+          type: string
+      description: Model for adding subscription
+      x-examples:
+        Add subscription:
+          planId: product1
+    UpdateSubscription:
+      required:
+      - id
+      - planId
+      - purchaseDateTime
+      - status
+      - subscriptionId
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - SUBSCRIPTION_STATE_ACTIVE
+          - SUBSCRIPTION_STATE_PENDING
+          - SUBSCRIPTION_STATE_EXPIRED
+          - SUBSCRIPTION_STATE_CANCELLED
+          - SUBSCRIPTION_STATE_PAUSED
+        planId:
+          type: string
+        purchaseDateTime:
+          type: string
+        subscriptionId:
+          type: string
+      description: Update subscription request body
+      x-examples:
+        Update subscription request body:
+          id: subsciptionIdFromOurDB
+          status: SUBSCRIPTION_STATE_ACTIVE
+          planId: product1
+          purchaseDateTime: 2022-07-29
+          subscriptionId: id from play store or app store
+    RegistrationWithAuthToken:
+      title: RegistrationWithAuthToken
+      type: object
+      properties:
+        accessToken:
+          type: string
+      description: Registeration with auth token
+      x-stoplight:
+        id: v8rwousjb8ijo
+      x-examples:
+        Model for registering user using auth token:
+          accessToken: access_token
+    ChagePassword:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        otp:
+          type: string
+      description: 'Model for Change Password '
+      x-examples:
+        'Change Password model ':
+          email: john@theDown.com
+          password: "1234839473729423"
+          otp: "123456"
+    CancelSubscription:
+      title: ""
+      type: object
+      properties:
+        cancelAtEndOfBillingCycle:
+          type: boolean
+      description: Model for cancel subscription
+      x-examples:
+        Cancel Subscripiton:
+          cancelAtEndOfBillingCycle: true
+    AddDiscussion:
+      type: object
+      properties:
+        title:
+          type: string
+        body:
+          type: string
+      description: Modle for add discussion
+      x-examples:
+        Modle for add discussion:
+          title: Sample title of discussios
+          body: Sample body of discussion
+    EditDiscussionItem:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        body:
+          type: string
+      description: Model for edit discussion item
+      x-examples:
+        Model for edit discussion item:
+          id: "123456"
+          title: Sample title of discussios
+          body: Sample body of discussion
+    CourseListResponse:
+      title: CourseListResponse
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CourseListResponse_data'
+      description: list of courses
+      x-stoplight:
+        id: vbb4am8dzyb5k
+    GetListOfQuestions:
+      title: GetListOfQuestions
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GetListOfQuestions_data'
+      x-stoplight:
+        id: x0jgr6f1fflr8
+    GroupsResponse:
+      title: GroupsResponse
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GroupsResponse_data'
+      x-stoplight:
+        id: vbfu5mtrypjyi
+    ListOfWordCloud:
+      title: ListOfWordCloud
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ListOfWordCloud_data'
+      x-examples:
+        example-1:
+          data:
+            wordCloud:
+            - userId: user1
+              word: any word
+    Reports:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Reports_data'
+      x-examples:
+        example-1:
+          data:
+            groups:
+            - groupId: group1
+              answer: anything
+            users:
+            - userId: user1
+              strikeWord: anything
+              understanding: my understanding about the course
+              response:
+              - questionId: question1
+                answers:
+                - answer1
+                - answer2
+                - answer3
+              - questionId: question2
+                answers:
+                - answer1
+                - answer3
+              - questionId: question3
+                answers:
+                - answer1
+            - userId: user2
+              strikeWord: anything
+              understanding: my understanding about the course
+              response:
+              - questionId: question1
+                answers:
+                - answer1
+                - answer2
+                - answer3
+              - questionId: question2
+                answers:
+                - answer1
+                - answer3
+    GroupAnswerList:
+      title: ""
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GroupAnswerList_data'
+      x-examples:
+        example-1:
+          data:
+            groups:
+            - groupId: string
+              questionId: string
+              answer: string
+    courseId_understanding_body:
+      type: object
+      properties:
+        understanding:
+          type: string
+      x-examples:
+        example-1:
+          Understanding: This is my understanding about the content
+    courseId_answer_body:
+      type: object
+      properties:
+        questionId:
+          type: string
+        answer:
+          type: string
+      x-examples:
+        example-1:
+          questionId: "1"
+          answer: I think this is answer
+    groupId_answer_body:
+      type: object
+      properties:
+        questionId:
+          type: string
+        answer:
+          type: string
+      x-examples:
+        example-1:
+          questionId: "1"
+          answer: I think this is answer
+    CourseListResponse_data_courses:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+    CourseListResponse_data:
+      type: object
+      properties:
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/CourseListResponse_data_courses'
+    GetListOfQuestions_data_questions:
+      type: object
+      properties:
+        id:
+          type: string
+        question:
+          type: string
+    GetListOfQuestions_data:
+      type: object
+      properties:
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetListOfQuestions_data_questions'
+    GroupsResponse_data_groups:
+      type: object
+      properties:
+        groupId:
+          type: string
+        users:
+          type: array
+          items:
+            type: string
+    GroupsResponse_data:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupsResponse_data_groups'
+    ListOfWordCloud_data_wordCloud:
+      type: object
+      properties:
+        userId:
+          type: string
+        word:
+          type: string
+    ListOfWordCloud_data:
+      type: object
+      properties:
+        wordCloud:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListOfWordCloud_data_wordCloud'
+    Reports_data_groups:
+      type: object
+      properties:
+        groupId:
+          type: string
+        answer:
+          type: string
+    Reports_data_response:
+      type: object
+      properties:
+        questionId:
+          type: string
+        answers:
+          type: array
+          items:
+            type: string
+    Reports_data_users:
+      type: object
+      properties:
+        userId:
+          type: string
+        strikeWord:
+          type: string
+        understanding:
+          type: string
+        response:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reports_data_response'
+    Reports_data:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reports_data_groups'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reports_data_users'
+    GroupAnswerList_data_groups:
+      type: object
+      properties:
+        groupId:
+          type: string
+        questionId:
+          type: string
+        answer:
+          type: string
+    GroupAnswerList_data:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupAnswerList_data_groups'
+  securitySchemes:
+    Authorization:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: pc0695695wbyv
